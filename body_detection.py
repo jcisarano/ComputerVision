@@ -8,7 +8,7 @@ image_gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 
 body_detector = cv2.CascadeClassifier("Cascades/fullbody.xml")
 
-body_detections = body_detector.detectMultiScale(image_gray)
+body_detections = body_detector.detectMultiScale(image_gray, scaleFactor=1.01,minSize=(50,50))
 #body_detections = body_detector.detectMultiScale(image_gray, scaleFactor=1.3,minSize=(40,40))
 
 #draw rectangles around detections
