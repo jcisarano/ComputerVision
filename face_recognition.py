@@ -36,4 +36,17 @@ ids, faces = get_image_data()
 #defaults to 8x8 grid, so 64 histograms per image
 lbph_classifier = cv2.face.LBPHFaceRecognizer_create()
 lbph_classifier.train(faces,ids)
-lbph_classifier.write("lbph_classifier.yml") #saves classifier to disk
+lbph_classifier.write("Classifiers/lbph_classifier.yml") #saves classifier to disk
+
+lbph_face_classifier = cv2.face.LBPHFaceRecognizer_create()
+lbph_face_classifier.read("Classifiers/lbph_classifier.yml")
+
+test_image = "Datasets/yalefaces/test/subject10.sad.gif"
+image = Image.open(test_image).convert("L")
+image_np = np.array(image,"uint8")
+prediction = lbph_face_classifier.predict(image_np)
+#print(prediction)
+
+expected_output = int(os.path.split(test_image)[1].split(".")[0].replace("subject",""))
+#print(expected_output)
+print("Expected subject:",expected_output,"Predicted:",prediction[0])
