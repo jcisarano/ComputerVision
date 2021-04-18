@@ -34,7 +34,7 @@ ids, faces = get_image_data()
 #print(faces[0].shape)
 
 #defaults to 8x8 grid, so 64 histograms per image
-lbph_classifier = cv2.face.LBPHFaceRecognizer_create()
+lbph_classifier = cv2.face.LBPHFaceRecognizer_create(radius = 4, neighbors=14, grid_x=9, grid_y=9)
 lbph_classifier.train(faces,ids)
 lbph_classifier.write("Classifiers/lbph_classifier.yml") #saves classifier to disk
 
@@ -81,3 +81,6 @@ import seaborn
 import matplotlib.pyplot as plt
 seaborn.heatmap(cm,annot=True)
 plt.show()
+
+
+
