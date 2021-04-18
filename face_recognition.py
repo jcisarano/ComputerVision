@@ -28,6 +28,12 @@ def get_image_data():
 	return np.array(ids), faces
 	
 ids, faces = get_image_data()
-print(len(ids))
-print(len(faces))
-print(faces[0].shape)
+
+#print(len(ids))
+#print(len(faces))
+#print(faces[0].shape)
+
+#defaults to 8x8 grid, so 64 histograms per image
+lbph_classifier = cv2.face.LBPHFaceRecognizer_create()
+lbph_classifier.train(faces,ids)
+lbph_classifier.write("lbph_classifier.yml") #saves classifier to disk
