@@ -50,3 +50,34 @@ prediction = lbph_face_classifier.predict(image_np)
 expected_output = int(os.path.split(test_image)[1].split(".")[0].replace("subject",""))
 #print(expected_output)
 print("Expected subject:",expected_output,"Predicted:",prediction[0])
+
+paths = [os.path.join("Datasets/yalefaces/test",f) for f in os.listdir("Datasets/yalefaces/test")]
+predictions = []
+expected_outputs = []
+for path in paths:
+	#print(path)
+	image = Image.open(path).convert("L")
+	image_np = np.array(image,"uint8")
+	prediction, _ = lbph_face_classifier.predict(image_np)
+	expected_output = int(os.path.split(path)[1].split(".")[0].replace("subject",""))
+	
+	predictions.append(prediction)
+	expected_outputs.append(expected_output)
+	
+predictions = np.array(predictions)
+expected_outputs = np.array(expected_outputs)
+
+print(predictions)
+print(expected_outputs)
+
+from sklearn.metrics import accuracy_score
+print(accuracy_score(expected_outputs,predictions) )
+
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(expected_outputs,predictions)
+print(cm)
+
+import seaborn
+import matplotlib.pyplot as plt
+seaborn.heatmap(cm,annot=True)
+plt.show()
