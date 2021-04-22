@@ -25,8 +25,26 @@ for path in paths:
 		points = points_detector(image_np,face)
 		for point in points.parts():
 			cv2.circle(image_np, (point.x, point.y), 2, (0,255,0), 1)
-	cv2.imshow("",image_np)
+		face_descriptor = face_descriptor_extractor.compute_face_descriptor(image_np,points)
+		#print(type(face_descriptor))
+		#print(len(face_descriptor))
+		face_descriptor = [f for f in face_descriptor] #converts to list
+		face_descriptor = np.asarray(face_descriptor, dtype=np.float64)
+		face_descriptor = face_descriptor[np.newaxis, :]
+		
+		#print(face_descriptor.shape)
+		if(face_descriptors is None):
+			face_descriptors = face_descriptor
+		else:
+			face_descriptors = np.concatenate((face_descriptors,face_descriptor),axis = 0)
+		index[idx] = path
+		idx += 1
+		
+print(face_descriptors.shape)
+			
+		
+	#cv2.imshow("",image_np)
 	
-	cv2.waitKey(0)
+	#cv2.waitKey(0)
 
 	
