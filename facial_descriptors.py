@@ -39,12 +39,20 @@ for path in paths:
 			face_descriptors = np.concatenate((face_descriptors,face_descriptor),axis = 0)
 		index[idx] = path
 		idx += 1
-		
-print(face_descriptors.shape)
+	
+print(index)
+
+print("Distance, same image:",np.linalg.norm(face_descriptors[131] - face_descriptors[131]))
+print("Distance, same person, different image:",np.linalg.norm(face_descriptors[131] - face_descriptors[129]))
+print("Distance, different people, same expression:",np.linalg.norm(face_descriptors[93] - face_descriptors[129]))
+print("Distance, different people, different expression:",np.linalg.norm(face_descriptors[94] - face_descriptors[129]))
+
+	
+#print(face_descriptors.shape)
 			
 		
-	#cv2.imshow("",image_np)
-	
-	#cv2.waitKey(0)
+#cv2.imshow("",image_np)
+
+#cv2.waitKey(0)
 
 	
