@@ -52,8 +52,32 @@ best_match = np.argmin(np.linalg.norm(face_descriptors[0] - face_descriptors[1:]
 print("Best match for ",index[0],"is",index[best_match])
 
 
-
-	
+threshold = 0.5
+paths = [os.path.join("Datasets/yalefaces/test",f) for f in os.listdir("Datasets/yalefaces/test")]
+for path in paths:
+	image = Image.open(path).convert("RGB")
+	image_np = np.array(image,"uint8")
+	face_detection = face_detector(image_np, 1)
+	for face in face_detection:
+		points = points_detector(image_np,face)
+		face_descriptor = face_descriptor_extractor.compute_face_descriptor(image_np,points)
+		face_descriptor = [f for f in face_descriptor] #converts to list
+		face_descriptor = np.asarray(face_descriptor, dtype=np.float64)
+		face_descriptor = face_descriptor[np.newaxis, :]
+		
+		distances = np.linalg.norm(face_descriptor-face_descriptors, axis=1)
+		min_index = np.argmin(distances)
+		min_distance = distances[min_index]
+		if min_distance <= threshold:
+			name_pred = int(os.path.split(index[min_index])[1].split(".")[0].replace("subject",""))
+		else:
+			name_pred = "Not identified"
+		name_real = int(os.path.split(path)[1].split(".")[0].replace("subject",""))
+		
+		cv2.putText(image_np, "Pred: " + str(name_pred), (10,30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,255,0))
+		cv2.putText(image_np, "Real: " + str(name_real), (10,50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,255,0))
+		cv2.imshow("",image_np)
+		cv2.waitKey(0)
 #print(face_descriptors.shape)
 			
 		
