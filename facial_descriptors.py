@@ -40,12 +40,18 @@ for path in paths:
 		index[idx] = path
 		idx += 1
 	
-print(index)
+#print(index)
 
 print("Distance, same image:",np.linalg.norm(face_descriptors[131] - face_descriptors[131]))
 print("Distance, same person, different image:",np.linalg.norm(face_descriptors[131] - face_descriptors[129]))
 print("Distance, different people, same expression:",np.linalg.norm(face_descriptors[93] - face_descriptors[129]))
 print("Distance, different people, different expression:",np.linalg.norm(face_descriptors[94] - face_descriptors[129]))
+
+print("Compare 131 to all faces:",np.linalg.norm(face_descriptors[131] - face_descriptors, axis=1))
+best_match = np.argmin(np.linalg.norm(face_descriptors[0] - face_descriptors[1:], axis=1))
+print("Best match for ",index[0],"is",index[best_match])
+
+
 
 	
 #print(face_descriptors.shape)
