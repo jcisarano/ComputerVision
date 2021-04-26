@@ -53,6 +53,9 @@ print("Best match for ",index[0],"is",index[best_match])
 
 
 threshold = 0.5
+predictions = []
+expected_outputs = []
+
 paths = [os.path.join("Datasets/yalefaces/test",f) for f in os.listdir("Datasets/yalefaces/test")]
 for path in paths:
 	image = Image.open(path).convert("RGB")
@@ -73,16 +76,22 @@ for path in paths:
 		else:
 			name_pred = "Not identified"
 		name_real = int(os.path.split(path)[1].split(".")[0].replace("subject",""))
+		predictions.append(name_pred)
+		expected_outputs.append(name_real)
 		
 		cv2.putText(image_np, "Pred: " + str(name_pred), (10,30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,255,0))
 		cv2.putText(image_np, "Real: " + str(name_real), (10,50), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,255,0))
-		cv2.imshow("",image_np)
-		cv2.waitKey(0)
+		#cv2.imshow("",image_np)
+		#cv2.waitKey(0)
 #print(face_descriptors.shape)
 			
-		
-#cv2.imshow("",image_np)
+predictions = np.array(predictions)
+expected_outputs = np.array(expected_outputs)
 
-#cv2.waitKey(0)
+print(predictions)
+print(expected_outputs)
+		
+from sklearn.metrics import accuracy_score
+print(accuracy_score(expected_outputs, predictions))
 
 	
