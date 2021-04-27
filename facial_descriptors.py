@@ -12,7 +12,10 @@ index = {}
 idx = 0
 face_descriptors = None
 
-paths = [os.path.join("Datasets/yalefaces/train",f) for f in os.listdir("Datasets/yalefaces/train")]
+train_img_path = "Datasets/yalefaces/train"
+test_img_path = "Datasets/yalefaces/test"
+
+paths = [os.path.join(train_img_path,f) for f in os.listdir(train_img_path)]
 for path in paths:
 	#print(path)
 	image = Image.open(path).convert("RGB") #with dlib, no need to convert to grayscale
@@ -56,7 +59,7 @@ threshold = 0.5
 predictions = []
 expected_outputs = []
 
-paths = [os.path.join("Datasets/yalefaces/test",f) for f in os.listdir("Datasets/yalefaces/test")]
+paths = [os.path.join(test_img_path,f) for f in os.listdir(test_img_path)]
 for path in paths:
 	image = Image.open(path).convert("RGB")
 	image_np = np.array(image,"uint8")
