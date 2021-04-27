@@ -12,12 +12,9 @@ index = {}
 idx = 0
 face_descriptors = None
 
-train_img_path = "Datasets/yalefaces/train"
-test_img_path = "Datasets/yalefaces/test"
 
-
-#train_img_path = "Datasets/jones_gabriel"
-#test_img_path = "Datasets/jones_gabriel"
+train_img_path = "Datasets/jones_gabriel"
+test_img_path = "Datasets/jones_gabriel"
 
 paths = [os.path.join(train_img_path,f) for f in os.listdir(train_img_path)]
 for path in paths:
@@ -47,17 +44,6 @@ for path in paths:
 		index[idx] = path
 		idx += 1
 	
-#print(index)
-
-#print("Distance, same image:",np.linalg.norm(face_descriptors[131] - face_descriptors[131]))
-#print("Distance, same person, different image:",np.linalg.norm(face_descriptors[131] - face_descriptors[129]))
-#print("Distance, different people, same expression:",np.linalg.norm(face_descriptors[93] - face_descriptors[129]))
-#print("Distance, different people, different expression:",np.linalg.norm(face_descriptors[94] - face_descriptors[129]))
-#
-#print("Compare 131 to all faces:",np.linalg.norm(face_descriptors[131] - face_descriptors, axis=1))
-#best_match = np.argmin(np.linalg.norm(face_descriptors[0] - face_descriptors[1:], axis=1))
-#print("Best match for ",index[0],"is",index[best_match])
-
 
 threshold = 0.5
 predictions = []
@@ -79,10 +65,10 @@ for path in paths:
 		min_index = np.argmin(distances)
 		min_distance = distances[min_index]
 		if min_distance <= threshold:
-			name_pred = int(os.path.split(index[min_index])[1].split(".")[0].replace("subject",""))
+			name_pred = int(os.path.split(index[min_index])[1].split(".")[1])
 		else:
 			name_pred = "Not identified"
-		name_real = int(os.path.split(path)[1].split(".")[0].replace("subject",""))
+		name_real = int(os.path.split(path)[1].split(".")[1])
 		predictions.append(name_pred)
 		expected_outputs.append(name_real)
 		
