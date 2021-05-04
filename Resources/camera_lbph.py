@@ -1,6 +1,6 @@
 import cv2
 
-face_detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+face_detector = cv2.CascadeClassifier("../Cascades/haarcascade_frontalface_default.xml")
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 face_recognizer.read("lbph_classifier.yml")
 width, height = 220, 220
