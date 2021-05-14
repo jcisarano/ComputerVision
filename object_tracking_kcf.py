@@ -1,13 +1,17 @@
 import cv2
 
-tracker = cv2.TrackerKCF_create()
+#tracker = cv2.TrackerKCF_create()
+
+#CSRT tracker is slower, but more accurate
+tracker = cv2.TrackerCSRT_create()
+
 video = cv2.VideoCapture("Videos/race.mp4")
 ok, frame = video.read() #reads first frame and determines if it is ok
 bbox = cv2.selectROI(frame)
-print(bbox)
+#print(bbox)
 
 ok = tracker.init(frame,bbox)
-print(ok)
+#print(ok)
 
 while True:
 	ok, frame = video.read()
