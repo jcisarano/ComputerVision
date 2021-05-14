@@ -1,16 +1,23 @@
 import cv2
 
 choice = input("Press 1 to use KCF tracker. Press 2 for CSRT. ")
-print(choice)
 
 if choice == "1":
 	print("Using KCF tracker. It is fast, but less accurate than CSRT.")
 	tracker = cv2.TrackerKCF_create()
 else:
 	print("Using CSRT tracker. It is slower, but more accurate")
+	#CSRT is overall better for street scene, because there are more objects
+	# and they move faster. KCF is easily confused.
 	tracker = cv2.TrackerCSRT_create()
 
-video = cv2.VideoCapture("Videos/race.mp4")
+filename = "Videos/race.mp4"
+choice = input("Press 1 to use race video. Press 2 for street video. ")
+
+if choice == "2":
+	filename = "Videos/street.mp4"
+
+video = cv2.VideoCapture(filename)
 ok, frame = video.read() #reads first frame and determines if it is ok
 bbox = cv2.selectROI(frame)
 #print(bbox)
